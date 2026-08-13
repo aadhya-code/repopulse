@@ -1,0 +1,33 @@
+{
+  "family": "repopulse-node",
+  "networkMode": "awsvpc",
+  "requiresCompatibilities": ["FARGATE"],
+  "cpu": "256",
+  "memory": "512",
+  "executionRoleArn": "arn:aws:iam::<account-id>:role/ecsTaskExecutionRole",
+  "containerDefinitions": [
+    {
+      "name": "repopulse-node",
+      "image": "<account-id>.dkr.ecr.<region>.amazonaws.com/repopulse-node:latest",
+      "portMappings": [{ "containerPort": 4000, "protocol": "tcp" }],
+      "environment": [
+        { "name": "PORT", "value": "4000" },
+        { "name": "MONGO_URI", "value": "<your-mongodb-atlas-or-documentdb-connection-string>" }
+      ],
+      "secrets": [
+        {
+          "name": "GITHUB_TOKEN",
+          "valueFrom": "arn:aws:secretsmanager:<region>:<account-id>:secret:repopulse/github-token"
+        }
+      ],
+      "logConfiguration": {
+        "logDriver": "awslogs",
+        "options": {
+          "awslogs-group": "/ecs/repopulse-node",
+          "awslogs-region": "<region>",
+          "awslogs-stream-prefix": "ecs"
+        }
+      }
+    }
+  ]
+}
