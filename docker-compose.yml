@@ -1,0 +1,41 @@
+version: "3.9"
+
+services:
+  mongo:
+    image: mongo:7
+    container_name: repopulse-mongo
+    restart: unless-stopped
+    ports:
+      - "27017:27017"
+    volumes:
+      - mongo-data:/data/db
+
+  node-service:
+    build: ./node-service
+    container_name: repopulse-node
+    restart: unless-stopped
+    env_file:
+      - ./node-service/.env
+    environment:
+      - MONGO_URI=mongodb://mongo:27017/repopulse
+    ports:
+      - "4000:4000"
+    depends_on:
+      - mongo
+
+  python-service:
+    build: ./python-service
+    container_name: repopulse-python
+    restart: unless-stopped
+    env_file:
+      - ./python-service/.env
+    environment:
+      - MONGO_URI=mongodb://mongo:27017/repopulse
+    ports:
+      - "8000:8000"
+    depends_on:
+      - mongo
+      - node-service
+
+volumes:
+  mongo-data:

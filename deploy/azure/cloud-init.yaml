@@ -1,0 +1,23 @@
+#cloud-config
+# Azure VM custom-data (cloud-init) script.
+# Paste this into the "Custom data" field under "Advanced" when creating
+# the VM in the Azure portal, or pass via --custom-data with the Azure CLI.
+# It runs automatically on first boot and brings the whole stack up.
+
+package_update: true
+packages:
+  - docker.io
+  - docker-compose-v2
+  - git
+
+runcmd:
+  - systemctl enable docker
+  - systemctl start docker
+  - usermod -aG docker azureuser
+  - cd /home/azureuser
+  - git clone https://github.com/aadhya-code/repopulse.git repopulse-mvp
+  - cd repopulse-mvp
+  - cp node-service/.env.example node-service/.env
+  - cp python-service/.env.example python-service/.env
+  # Fill in your real GitHub token before/after boot -- see README.
+  
