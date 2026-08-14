@@ -20,7 +20,7 @@ chmod +x $DOCKER_CONFIG/docker-compose
 
 # 2. Pull the project
 cd /home/ec2-user
-git clone <YOUR_GITHUB_REPO_URL> repopulse-mvp
+git clone https://github.com/aadhya-code/repopulse.git repopulse-mvp
 cd repopulse-mvp
 
 # 3. Env files -- fill these in before launch, or SSH in and edit them,
