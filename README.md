@@ -1,4 +1,33 @@
 # RepoPulse
+> AI-powered GitHub repository analytics platform for semantic commit search and machine-learning-based pull request risk scoring.
+
+## 🚀 Live Deployment
+
+RepoPulse is deployed on an Azure VM using Docker Compose.
+
+| Service | Live URL |
+|---|---|
+| Node.js API | http://20.197.28.7:4000 |
+| Python/FastAPI API | http://20.197.28.7:8000 |
+
+### Health Checks
+
+- Node.js API: http://20.197.28.7:4000/health
+- Python/FastAPI API: http://20.197.28.7:8000/health
+
+The deployed services have been tested successfully from an external machine.
+
+### Verified Deployment
+
+- GitHub repository ingestion: tested with `facebook/react`
+- Commits ingested: 30
+- Pull requests ingested: 32
+- Semantic search: tested successfully
+- PR risk scoring: 32 PRs scored
+- Risk scores persisted: 32/32 PRs
+- Non-zero risk scores: 11/32 PRs
+- Docker Compose services: MongoDB, Node.js, and Python/FastAPI
+- Deployment platform: Microsoft Azure
 
 An AI-powered GitHub repository analytics platform that ingests repository
 activity, enables natural-language semantic search over commit history, and
